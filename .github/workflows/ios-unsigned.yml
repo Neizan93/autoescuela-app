@@ -45,17 +45,24 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             archive -archivePath ./build/App.xcarchive
 
-      # 7. Exportar la IPA sin firma
+      # 7. Listar los archivos en el directorio de build
+      - name: List build directory
+        run: |
+          cd ios/App
+          ls -R ./build
+
+      # 8. Exportar la IPA sin firma
       - name: Export Unsigned IPA
         run: |
+          cd ios/App
           xcodebuild -exportArchive \
             -archivePath ./build/App.xcarchive \
-            -exportOptionsPlist ios/App/ExportOptions.plist \
+            -exportOptionsPlist ./ExportOptions.plist \
             -exportPath ./build/ \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO
 
-      # 8. Subir la IPA como artefacto
+      # 9. Subir la IPA como artefacto
       - name: Upload Unsigned IPA
         uses: actions/upload-artifact@v3
         with:
