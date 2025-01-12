@@ -3,7 +3,7 @@ name: Build Unsigned Android APK
 on:
   push:
     branches:
-      - main  # Cambia a la rama que deseas observar
+      - main
   workflow_dispatch:
 
 jobs:
