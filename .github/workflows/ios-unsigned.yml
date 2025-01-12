@@ -51,13 +51,14 @@ jobs:
       - name: Extract .app from Archive
         run: |
           cd ios/App
-          cp -R ./build/App.xcarchive/Products/Applications/App.app ./build/
+          mkdir -p ./build/Payload
+          cp -R ./build/App.xcarchive/Products/Applications/App.app ./build/Payload/
 
       # 8. Empaquetar el .app en un .ipa
       - name: Package Unsigned IPA
         run: |
           cd ios/App/build
-          zip -r App.ipa App.app
+          zip -r App.ipa Payload/
 
       # 9. Subir la IPA como artefacto
       - name: Upload Unsigned IPA
