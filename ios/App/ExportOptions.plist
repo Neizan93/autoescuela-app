@@ -3,10 +3,10 @@
 <plist version="1.0">
 <dict>
     <key>method</key>
-    <string>ad-hoc</string> <!-- Cambiar según el método deseado -->
+    <string>release-testing</string>
     <key>signingStyle</key>
     <string>manual</string>
     <key>teamID</key>
-    <string></string> <!-- Vacío porque no se firma -->
+    <string></string>
 </dict>
 </plist>
