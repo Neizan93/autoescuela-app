@@ -33,13 +33,17 @@ jobs:
       - name: Sync Capacitor
         run: npx cap sync android
 
-      # 6. Construir el APK sin firmar
+      # 6. Otorgar permisos de ejecución a gradlew
+      - name: Grant execute permission to gradlew
+        run: chmod +x ./android/gradlew
+
+      # 7. Construir el APK sin firmar
       - name: Build Unsigned APK
         run: |
           cd android
           ./gradlew assembleDebug
 
-      # 7. Subir el APK como artefacto
+      # 8. Subir el APK como artefacto
       - name: Upload Unsigned APK
         uses: actions/upload-artifact@v3
         with:

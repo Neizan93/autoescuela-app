@@ -1,0 +1,63 @@
+name: Build Unsigned iOS IPA
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      # 1. Checkout del código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Configurar Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # 3. Instalar dependencias del proyecto
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Construir los archivos web
+      - name: Build Web Assets
+        run: npm run build
+
+      # 5. Sincronizar Capacitor con iOS
+      - name: Sync Capacitor
+        run: npx cap sync ios
+
+      # 6. Construir y archivar el proyecto sin firma
+      - name: Build Unsigned IPA
+        run: |
+          cd ios/App
+          xcodebuild -workspace App.xcworkspace \
+            -scheme App \
+            -sdk iphoneos \
+            -configuration Release \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            archive -archivePath ./build/App.xcarchive
+
+      # 7. Exportar la IPA sin firma
+      - name: Export Unsigned IPA
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath ./build/App.xcarchive \
+            -exportOptionsPlist ios/App/ExportOptions.plist \
+            -exportPath ./build/ \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO
+
+      # 8. Subir la IPA como artefacto
+      - name: Upload Unsigned IPA
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-unsigned.ipa
+          path: ios/App/build/App.ipa
