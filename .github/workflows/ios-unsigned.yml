@@ -34,7 +34,7 @@ jobs:
         run: npx cap sync ios
 
       # 6. Construir y archivar el proyecto sin firma
-      - name: Build Unsigned IPA
+      - name: Build Unsigned App Archive
         run: |
           cd ios/App
           xcodebuild -workspace App.xcworkspace \
@@ -47,25 +47,18 @@ jobs:
             DEVELOPMENT_TEAM="" \
             archive -archivePath ./build/App.xcarchive
 
-      # 7. Listar los archivos en el directorio de build
-      - name: List build directory
+      # 7. Extraer el .app del archivo .xcarchive
+      - name: Extract .app from Archive
         run: |
           cd ios/App
-          ls -R ./build
+          cp -R ./build/App.xcarchive/Products/Applications/App.app ./build/
 
-      # 8. Exportar la IPA sin firma
-      - name: Export Unsigned IPA
+      # 8. Empaquetar el .app en un .ipa
+      - name: Package Unsigned IPA
         run: |
-          cd ios/App
-          xcodebuild -exportArchive \
-            -archivePath ./build/App.xcarchive \
-            -exportOptionsPlist ./ExportOptions.plist \
-            -exportPath ./build/ \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO \
-            DEVELOPMENT_TEAM=""
-          
+          cd ios/App/build
+          zip -r App.ipa App.app
+
       # 9. Subir la IPA como artefacto
       - name: Upload Unsigned IPA
         uses: actions/upload-artifact@v3
