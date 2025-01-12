@@ -1,0 +1,20 @@
+<div class="resultado-containter">
+    <div class="resultado">
+        <h1>Resultados del Examen</h1>
+        <p>Alumno: {{ alumno?.nombre }}</p>
+        <p>Fecha: {{ examen?.fecha | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <p>Resultado: {{ examen?.resultado | uppercase }}</p>
+        <h2>Faltas</h2>
+        <ul>
+            @for (falta of examen?.faltas; track falta) {
+            <li>
+                {{ falta.descripcion }} ({{ falta.veces }} {{ falta.veces === 1 ? 'vez' : 'veces' }})
+            </li>
+            }
+        </ul>
+        <div class="buttons">
+            <button class="share" (click)="shareResults()">Compartir</button>
+            <button class="go-back" (click)="goBack()">Volver</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,230 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.iniciar-examen {
+    padding: 0.5rem;
+}
+
+h1.no-apto {
+    background-color: #000000; /* Negro puro */
+    animation: colorFade 2.5s infinite; /* Duración 5 segundos en bucle infinito */
+    animation-delay: 30s; /* Retraso de 30 segundos antes de comenzar nuevamente */
+}
+
+@keyframes colorFade {
+    0% {
+        background-color: #000000; /* Negro puro */
+    }
+    50% {
+        background-color: #FF0000; /* Rojo warning */
+    }
+    100% {
+        background-color: #000000; /* Regreso al negro puro */
+    }
+}
+
+.filtros {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+    padding: 0.125rem 0.5rem;
+    background-color: #f8ea22;
+    border-radius: 8px;
+}
+
+.filtros button {
+    flex: 0;
+    padding: 0.25rem 0.75rem;
+    border: none;
+    background: none;
+    font-weight: bold;
+    color: #000000;
+    cursor: pointer;
+    text-align: center;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.filtros button.active {
+    border-bottom: 2px solid #000000;
+    color: #ffffff;
+    background-color: #000000;
+}
+
+.faltas {
+    margin-top: 0.5rem;
+}
+
+.falta-grupo {
+    margin-bottom: 1.5rem;
+}
+
+.falta-grupo h2 {
+    color: #F8EA22;
+    margin-bottom: 0.5rem;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-content: stretch;
+    justify-content: space-between;
+}
+
+ul li {
+    flex: 1 1 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: #000000;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 0.75rem;
+    height: auto;
+    flex-grow: 1;
+    margin: 0 auto;
+    gap: 0.25rem;
+    position: relative;
+}
+
+/* Dos columnas desde 384px */
+@media (min-width: 384px) {
+    ul li {
+        flex: 1 1 calc(50% - 1rem);
+        max-width: calc(50% - 1rem);
+    }
+}
+
+/* Tres columnas desde 576px */
+@media (min-width: 576px) {
+    ul li {
+        flex: 1 1 calc(33.33% - 1rem);
+        max-width: calc(33.33% - 1rem);
+    }
+}
+
+/* Cuatro columnas desde 1024px */
+@media (min-width: 1024px) {
+    ul li {
+        flex: 1 1 calc(25% - 1rem);
+        max-width: calc(25% - 1rem);
+    }
+}
+
+/* Cinco columnas desde 1366px */
+@media (min-width: 1366px) {
+    ul li {
+        flex: 1 1 calc(20% - 1rem);
+        max-width: calc(20% - 1rem);
+    }
+}
+
+/* Seis columnas desde 1792px */
+@media (min-width: 1792px) {
+    ul li {
+        flex: 1 1 calc(16.66% - 1rem);
+        max-width: calc(16.66% - 1rem);
+    }
+}
+
+/* Siete columnas desde 2048px */
+@media (min-width: 2048px) {
+    ul li {
+        flex: 1 1 calc(14.28% - 1rem);
+        max-width: calc(14.28% - 1rem);
+    }
+}
+
+li fa-icon {
+    width: 10px;
+    height: 10px;
+}
+
+li span {
+    flex-grow: 1;
+    user-select: none;
+    text-wrap: balance;
+}
+
+li button {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    background-color: #FFFFFF;
+    border: 1px solid #000000;
+    color: #000000;
+    border-radius: 4px;
+    position: absolute;
+    right: -0.5rem;
+    top: -0.75rem;
+}
+
+li button.icon {
+    font-size: 1rem;
+    padding: 0.15rem;
+}
+
+li:active button {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+li button:active {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+/* Clases que sobrescriben el color base */
+li.leve {
+    background-color: #6060BFaa;
+    color: #FFFFFF;
+}
+
+li.deficiente {
+    background-color: #FFCC66AA;
+    color: #000000;
+}
+
+li.eliminatoria {
+    background-color: #FF0000AA;
+    color: #FFFFFF;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-top: auto;
+    padding: 0.5rem 0.5rem 1rem 0.5rem;
+}
+
+.buttons .cancelar {
+    background-color: lightgray;
+    color: #000000;
+    border-color: lightgray;
+}
+
+.buttons .finalizar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3e9d54;
+    border-color: #3e9d54;
+    color: #FFFFFF;
+}

@@ -1,1 +1,96 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #000000;
+    /* Texto principal negro */
+    background-color: #FFFFFF;
+    /* Fondo blanco */
+    max-width: 100dvw;
+    user-select: none;
+}
+
+h1,
+h2 {
+    text-align: center;
+    margin: 0.5rem auto;
+    font-size: 1.25rem;
+    background: #000;
+    color: #FFFFFF;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+button {
+    display: inline-block;
+    margin: 0.5rem auto;
+    padding: 0.5rem 1rem;
+    border: 2px solid #F8EA22;
+    /* Borde con el color principal */
+    background-color: #F8EA22;
+    /* Fondo amarillo */
+    color: #000000;
+    /* Texto negro */
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+button:hover {
+    background-color: #000000;
+    /* Fondo negro al pasar */
+    color: #F8EA22;
+    /* Texto amarillo */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: #F8EA22;
+    color: #000000;
+    padding: 0.8rem;
+    margin: 0.5rem auto;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+li button {
+    padding: 0.2rem 0.5rem;
+    background-color: #FFFFFF;
+    border: 1px solid #000000;
+    color: #000000;
+    font-size: 0.8rem;
+    border-radius: 4px;
+}
+
+li button:hover {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+input {
+    border: 1px solid darkgray;
+    padding: 1rem;
+}
+
+@media (min-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+
+    li {
+        font-size: 1.1rem;
+    }
+
+    button {
+        padding: 0.7rem 1.5rem;
+    }
+}

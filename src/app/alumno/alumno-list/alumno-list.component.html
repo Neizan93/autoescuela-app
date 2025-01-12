@@ -1,0 +1,51 @@
+<div class="alumno-list">
+    <h1>Lista de Alumnos</h1>
+
+    <ul>
+        @for (alumno of alumnos(); track alumno) {
+        <li (click)="comprobarExamen(alumno)">
+            {{ alumno.nombre }}
+        </li>
+        }
+    </ul>
+
+    <app-alumno-add (alumnoAdded)="onAlumnoAdded($event)"></app-alumno-add>
+
+    @if (mostrarModal() && alumnoSeleccionado()) {
+    <div class="modal">
+        <div class="modal-content">
+            <h2>Opciones para {{ alumnoSeleccionado()?.nombre }}</h2>
+            <button class="new" (click)="iniciarExamen()">Iniciar Nuevo Examen</button>
+
+            @if (examenesAnteriores().length > 0) {
+            <div>
+                <h3>5 Errores Más Comunes</h3>
+                <ul class="top-errores">
+                    @for (error of topErrores(); track error) {
+                    <li>
+                        {{ error.descripcion }}: {{ error.veces }} {{ error.veces === 1 ? 'vez' : 'veces' }}
+                    </li>
+                    }
+                </ul>
+                <h3>Exámenes Anteriores</h3>
+                @if (porcentajeAprobados() >= 50) {
+                <p>Porcentaje de Aprobados: {{ porcentajeAprobados() | number:'1.1-1' }}%</p>
+                } @else {
+                <p>Porcentaje de Suspensos: {{ (100 - porcentajeAprobados()) | number:'1.1-1' }}%</p>
+                }
+                <ul class="examenes-anteriores">
+                    @for (examen of examenesAnteriores(); track examen) {
+                    <li (click)="verResultado(examen)">
+                        Examen {{ $index + 1 }} ({{ examen.fecha | date:'dd/MM/yyyy HH:mm' }}):
+                        {{ examen.resultado === 'apto' ? '✅' : '❌' }}
+                    </li>
+                    }
+                </ul>
+            </div>
+            }
+
+            <button class="close" (click)="cerrarModal()">Cerrar</button>
+        </div>
+    </div>
+    }
+</div>

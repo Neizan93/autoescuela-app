@@ -1,0 +1,33 @@
+<div class="iniciar-examen">
+    <h1 [class.no-apto]="resultado() === 'no-apto'">{{ alumno?.nombre }}</h1>
+    <div class="filtros">
+        @for (filtro of filtros; track filtro) {
+        <button 
+            [class.active]="filtroActivo === filtro" 
+            (click)="cambiarFiltro(filtro)">
+            {{ filtro }}
+        </button>
+        }
+    </div>
+    <div class="faltas">
+        <ul>
+            @for(falta of faltasFiltradas(); track falta) {
+            <li (click)="agregarFalta(falta)" [class]="falta.tipo">
+                <span>{{ falta.descripcion }}</span>
+                <button [class.icon]="!falta.veces">
+                    @if (falta.veces) {
+                        {{ falta.veces }}
+                    } @else {
+                        {{ falta.icon }}
+                    }
+                </button>
+            </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<div class="buttons">
+    <button class="cancelar" (click)="goBack()">Cancelar Examen</button>
+    <button class="finalizar" (click)="finalizarExamen()">Finalizar Examen</button>
+</div>
