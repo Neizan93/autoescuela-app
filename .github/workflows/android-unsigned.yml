@@ -15,26 +15,31 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Configurar Java
-      - name: Set up JDK
-        uses: actions/setup-java@v3
+      # 2. Configurar Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          java-version: 11
-          distribution: 'temurin'
+          node-version: 18
 
       # 3. Instalar dependencias del proyecto
       - name: Install dependencies
-        run: |
-          npm install
-          npx cap sync android
+        run: npm install
 
-      # 4. Construir el APK sin firmar
+      # 4. Construir los archivos web
+      - name: Build Web Assets
+        run: npm run build
+
+      # 5. Sincronizar Capacitor con Android
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      # 6. Construir el APK sin firmar
       - name: Build Unsigned APK
         run: |
           cd android
           ./gradlew assembleDebug
 
-      # 5. Subir el APK como artefacto
+      # 7. Subir el APK como artefacto
       - name: Upload Unsigned APK
         uses: actions/upload-artifact@v3
         with:

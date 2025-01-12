@@ -4,31 +4,49 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: macos-latest
 
     steps:
+      # 1. Checkout del código
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 2. Configurar Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
 
+      # 3. Instalar dependencias del proyecto
       - name: Install dependencies
         run: npm install
 
+      # 4. Construir los archivos web
+      - name: Build Web Assets
+        run: npm run build
+
+      # 5. Sincronizar Capacitor con iOS
       - name: Sync Capacitor
         run: npx cap sync ios
 
+      # 6. Configurar Xcode y construir el proyecto
       - name: Build iOS
         run: |
           cd ios/App
           xcodebuild -workspace App.xcworkspace -scheme App -sdk iphoneos -configuration Release archive -archivePath ./build/App.xcarchive
 
+      # 7. Exportar el IPA
       - name: Export IPA
         run: |
           xcodebuild -exportArchive -archivePath ./build/App.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath ./build/
+
+      # 8. Subir el IPA como artefacto
+      - name: Upload IPA
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release.ipa
+          path: ios/App/build/App.ipa
