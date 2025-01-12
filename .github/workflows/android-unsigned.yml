@@ -1,0 +1,42 @@
+name: Build Unsigned Android APK
+
+on:
+  push:
+    branches:
+      - main  # Cambia a la rama que deseas observar
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout del código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Configurar Java
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: 'temurin'
+
+      # 3. Instalar dependencias del proyecto
+      - name: Install dependencies
+        run: |
+          npm install
+          npx cap sync android
+
+      # 4. Construir el APK sin firmar
+      - name: Build Unsigned APK
+        run: |
+          cd android
+          ./gradlew assembleDebug
+
+      # 5. Subir el APK como artefacto
+      - name: Upload Unsigned APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-debug-unsigned.apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
